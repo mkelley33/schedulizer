@@ -31,7 +31,6 @@ export default {
         return response.json();
       })
       .then(json => {
-        console.log(json.data);
         this.tasks = json.data;
       });
   }
