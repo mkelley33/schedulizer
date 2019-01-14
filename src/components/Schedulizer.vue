@@ -4,11 +4,11 @@
       <h1>Schedulizer</h1>
       <table>
         <tr>
-          <th>Cron</th>
-          <th>Name</th>
+          <th>Date</th>
+          <th>Event Name</th>
         </tr>
         <tr v-for="task in tasks" :key='task.id'>
-          <td class="data-table-cell">{{task.attributes.cron}}</td>
+          <td class="data-table-cell">{{task.formattedDate}}</td>
           <td class="data-table-cell">{{task.attributes.name}}</td>
         </tr>
       </table>
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import cronParser from 'cron-parser';
+
 export default {
   name: 'Schedulizer',
   data() {
@@ -31,6 +33,10 @@ export default {
         return response.json();
       })
       .then(json => {
+        json.data.forEach(task => {
+          const interval = cronParser.parseExpression(task.attributes.cron);
+          task.formattedDate = interval.next().toString();
+        });
         this.tasks = json.data;
       });
   }
