@@ -1,4 +1,4 @@
-# sched
+# Schedulizer
 
 ## Project setup
 ```
@@ -9,6 +9,9 @@ npm install
 ```
 npm run serve
 ```
+Run this command to start the application.  Open the application in your browser
+at http://localhost:8080/.
+
 
 ### Compiles and minifies for production
 ```
