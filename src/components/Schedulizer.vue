@@ -18,6 +18,7 @@
 
 <script>
 import { fetchEvents } from '../api/event-api';
+import notify from '../services/notify';
 
 export default {
   name: 'Schedulizer',
@@ -27,7 +28,10 @@ export default {
     };
   },
   created() {
-    fetchEvents().then(data => (this.events = data));
+    fetchEvents().then(data => {
+      this.events = data;
+      notify(this.events);
+    });
   }
 };
 </script>
