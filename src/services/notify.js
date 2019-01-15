@@ -39,6 +39,9 @@ function showNotification(event) {
 
 function checkDeadLines() {
   for (const event of _events) {
+    if (event.notified) {
+      continue;
+    }
     const date = new Date(event.unformattedDate);
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -52,7 +55,6 @@ function checkDeadLines() {
     const nowHour = nowDate.getHours();
     const nowMinute = nowDate.getMinutes();
     if (
-      !event.notified &&
       year === nowYear &&
       month === nowMonth &&
       day === nowDay &&
@@ -61,7 +63,6 @@ function checkDeadLines() {
     ) {
       showNotification(event);
       event.notified = true;
-      break;
     }
   }
 }
