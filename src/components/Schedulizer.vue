@@ -4,12 +4,12 @@
       <h1>Schedulizer</h1>
       <table>
         <tr>
-          <th>Date</th>
           <th>Event Name</th>
+          <th>Date</th>
         </tr>
-        <tr v-for="task in tasks" :key='task.id'>
-          <td class="data-table-cell">{{task.formattedDate}}</td>
-          <td class="data-table-cell">{{task.attributes.name}}</td>
+        <tr v-for="event in events" :key='event.id'>
+          <td class="data-table-cell">{{event.attributes.name}}</td>
+          <td class="data-table-cell">{{event.formattedDate}}</td>
         </tr>
       </table>
     </header>
@@ -17,28 +17,17 @@
 </template>
 
 <script>
-import cronParser from 'cron-parser';
+import { fetchEvents } from '../api/event-api';
 
 export default {
   name: 'Schedulizer',
   data() {
     return {
-      tasks: []
+      events: []
     };
   },
   created() {
-    window
-      .fetch('https://scheduler-challenge.herokuapp.com/schedule')
-      .then(response => {
-        return response.json();
-      })
-      .then(json => {
-        json.data.forEach(task => {
-          const interval = cronParser.parseExpression(task.attributes.cron);
-          task.formattedDate = interval.next().toString();
-        });
-        this.tasks = json.data;
-      });
+    fetchEvents().then(data => (this.events = data));
   }
 };
 </script>
