@@ -71,5 +71,5 @@ let _events;
 
 export default function notify(events) {
   _events = events;
-  setInterval(checkDeadLines, 10000);
+  setInterval(checkDeadLines, 1000);
 }
