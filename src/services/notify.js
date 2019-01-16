@@ -38,10 +38,8 @@ function showNotification(event) {
 }
 
 function checkDeadLines() {
-  for (const event of _events) {
-    if (event.notified) {
-      continue;
-    }
+  const unnotifiedEvents = _events.filter(event => !event.notified);
+  for (const event of unnotifiedEvents) {
     const date = new Date(event.unformattedDate);
     const year = date.getFullYear();
     const month = date.getMonth();
